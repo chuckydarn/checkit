@@ -10,11 +10,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header>
-          <h1>Welcome to CheckIt</h1>
-        </header>
-        <Lists />
+      <div className="app">
+        <div className="sidebar">
+          <Lists />
+        </div>
+        <div className="main">
+          <header>
+            <h1>Welcome to CheckIt</h1>
+          </header>
+        </div>
       </div>
     );
   }

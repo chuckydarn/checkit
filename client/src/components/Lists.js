@@ -55,6 +55,7 @@ class Lists extends Component {
           {this.state.serverResponse.map(list =>
             <li key={list.id}>{list.name}</li>
           )}
+          <li>New List</li>
         </ul>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <div>
