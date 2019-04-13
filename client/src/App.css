@@ -1,8 +1,3 @@
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-.app {
-  display: flex;
+.app-frame {
+  height: 100vh;
 }

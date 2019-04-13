@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 class Options extends Component {
   constructor(props) {
@@ -27,18 +28,16 @@ class Options extends Component {
 
   render() {
     return (
-      <div className="options">
-        <ul>
-          <li>
-            Options
-            <div className="sub-options">
-              <ul>
-                <li onClick={(e) => {this.handleListDelete(e)}}>Delete List</li>
-                <li>Delete Checked Items</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+      <div>
+        <Dropdown>
+          <Dropdown.Toggle variant="outline-info">
+            Edit
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={(e) => {this.handleListDelete(e)}}>Delete List</Dropdown.Item>
+            <Dropdown.Item>Delete Checked Items</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     );
   }

@@ -3,6 +3,11 @@ import Lists from './components/Lists';
 import Options from './components/Options';
 import './App.css';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -42,13 +47,19 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <div className="sidebar">
-          <Lists handleListClick={this.handleListClick} initialParentState={this.initialParentState} deletedListId={this.state.deletedListId} ref="lists" />
-        </div>
-        <div className="main">
-          <h1>{this.state.activeList}</h1>
-          <Options listId={this.state.activeListId} handleListDelete={this.handleListDelete}/>
-        </div>
+        <Container fluid className="app-frame">
+          <Row className="h-100" noGutters>
+            <Col className="col-3 border-right">
+              <Lists handleListClick={this.handleListClick} initialParentState={this.initialParentState} deletedListId={this.state.deletedListId} ref="lists" />
+            </Col>
+            <Col className="">
+              <Navbar className="justify-content-between border-bottom">
+                <Navbar.Text><h3>{this.state.activeList}</h3></Navbar.Text>
+                <Options listId={this.state.activeListId} handleListDelete={this.handleListDelete}/>
+              </Navbar>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

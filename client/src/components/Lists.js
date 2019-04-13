@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Nav from 'react-bootstrap/Nav';
 
 class Lists extends Component {
   constructor(props) {
@@ -57,17 +61,18 @@ class Lists extends Component {
     return (
       <div>
         <h3>Your Lists</h3>
-        <ul>
+        <Nav className="flex-column">
           {this.state.serverResponse.map(list =>
-            <li key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</li>
+            <Nav.Link key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</Nav.Link>
           )}
-          <li>New List</li>
-        </ul>
+        </Nav>
         <form onSubmit={(e) => this.handleSubmit(e)}>
-          <div>
-            <input type="text" value={this.state.newListName} onChange={(e) => {this.handleChange(e)}} placeholder="Enter New List" />
-          </div>
-          <button type="submit">Create</button>
+          <InputGroup>
+            <FormControl type="text" value={this.state.newListName} onChange={(e) => {this.handleChange(e)}} placeholder="Enter New List" />
+            <InputGroup.Append>
+              <Button type="submit" variant="info">Create</Button>
+            </InputGroup.Append>
+          </InputGroup>
         </form>
       </div>
     );
