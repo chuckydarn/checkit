@@ -22,5 +22,15 @@ module.exports = {
         res.send({list});
       }
     });
+  },
+
+  destroy(req, res, next){
+    listQueries.deleteList(req.params.id, (err, list) => {
+      if(err){
+        res.send('error');
+      } else {
+        res.send({list});
+      }
+    });
   }
 }

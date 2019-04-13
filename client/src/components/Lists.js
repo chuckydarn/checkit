@@ -15,6 +15,7 @@ class Lists extends Component {
     fetch("http://localhost:9000/lists")
     .then(res => res.json())
     .then(json => this.setState({ serverResponse: json.lists }))
+    .then(() => {this.props.initialParentState(this.state.serverResponse[0])})
     .catch(err => err);
   }
 
@@ -48,20 +49,24 @@ class Lists extends Component {
     this.setState({newListName: ""});
   }
 
+  handleDelete() {
+    this.setState({serverResponse: this.state.serverResponse.filter(i => i.id !== this.props.deletedListId)});
+  }
+
   render() {
     return (
       <div>
+        <h3>Your Lists</h3>
         <ul>
           {this.state.serverResponse.map(list =>
-            <li key={list.id}>{list.name}</li>
+            <li key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</li>
           )}
         </ul>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <div>
-            <label>List Name</label>
             <input type="text" value={this.state.newListName} onChange={(e) => {this.handleChange(e)}} placeholder="Enter New List" />
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Create</button>
         </form>
       </div>
     );
