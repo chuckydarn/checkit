@@ -12,6 +12,7 @@ const appConfig = require('./config/main-config.js');
 const routeConfig = require('./config/route-config.js');
 
 // view engine setup
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -30,6 +31,10 @@ routeConfig.init(app);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 // error handler
