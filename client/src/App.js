@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Lists from './components/Lists';
 import Options from './components/Options';
+import Items from './components/Items';
 import './App.css';
 
 import Container from 'react-bootstrap/Container';
@@ -15,10 +16,12 @@ class App extends Component {
       activeList: "",
       activeListId: "",
       deletedListId: "",
+      deletedItems: false,
     };
     this.handleListClick = this.handleListClick.bind(this);
     this.initialParentState = this.initialParentState.bind(this);
     this.handleListDelete = this.handleListDelete.bind(this);
+    this.handleItemsDelete = this.handleItemsDelete.bind(this);
   }
 
   initialParentState(list) {
@@ -44,6 +47,16 @@ class App extends Component {
     this.refs.lists.callServer();
   }
 
+  handleItemsDelete() {
+    this.setState({
+      deletedItems: true
+    });
+    this.refs.items.handleItemsDelete();
+    this.setState({
+      deletedItems: false
+    });
+  }
+
   render() {
     return (
       <div className="app">
@@ -55,8 +68,9 @@ class App extends Component {
             <Col className="">
               <Navbar className="justify-content-between border-bottom">
                 <Navbar.Text><h3>{this.state.activeList}</h3></Navbar.Text>
-                <Options listId={this.state.activeListId} handleListDelete={this.handleListDelete}/>
+                <Options listId={this.state.activeListId} handleListDelete={this.handleListDelete} handleItemsDelete={this.handleItemsDelete}/>
               </Navbar>
+              <Items listId={this.state.activeListId} ref="items" deleteItems={this.state.deleteItems}/>
             </Col>
           </Row>
         </Container>

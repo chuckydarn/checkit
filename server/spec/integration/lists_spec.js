@@ -60,20 +60,20 @@ describe("routes : lists", () => {
   });
 
   describe("POST /lists/:id/destroy", () => {
-     it("should delete the list with the associated ID", (done) => {
-       List.all()
-       .then((lists) => {
-         const listCountBeforeDelete = lists.length;
-         expect(listCountBeforeDelete).toBe(1);
-         request.post(`${base}${this.list.id}/destroy`, (err, res, body) => {
-           List.all()
-           .then((lists) => {
-             expect(err).toBeNull();
-             expect(lists.length).toBe(listCountBeforeDelete - 1);
-             done();
-           })
-         });
-       });
-     });
-   });
+    it("should delete the list with the associated ID", (done) => {
+      List.all()
+      .then((lists) => {
+        const listCountBeforeDelete = lists.length;
+        expect(listCountBeforeDelete).toBe(1);
+        request.post(`${base}${this.list.id}/destroy`, (err, res, body) => {
+          List.all()
+          .then((lists) => {
+            expect(err).toBeNull();
+            expect(lists.length).toBe(listCountBeforeDelete - 1);
+            done();
+          })
+        });
+      });
+    });
+  });
 });

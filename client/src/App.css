@@ -1,3 +1,19 @@
 .app-frame {
   height: 100vh;
 }
+
+.list-item {
+  display: flex;
+}
+
+.list-item.editing {
+  display: none;
+}
+
+.list-item.editing + .form {
+  display: block;
+}
+
+.form {
+  display: none;
+}

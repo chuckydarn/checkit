@@ -24,14 +24,14 @@ module.exports = {
   },
 
   deleteList(id, callback){
-     return List.destroy({
-       where: {id}
-     })
-     .then((list) => {
-       callback(null, list);
-     })
-     .catch((err) => {
-       callback(err);
-     })
-   }
+    return List.destroy({
+      where: {id}
+    })
+    .then((list) => {
+      callback(null, list);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  }
 }
