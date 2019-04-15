@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import Nav from 'react-bootstrap/Nav';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 class Lists extends Component {
   constructor(props) {
@@ -59,13 +59,12 @@ class Lists extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Your Lists</h3>
-        <Nav className="flex-column">
+      <div className="px-3">
+        <ListGroup as="ul" className="mb-3">
           {this.state.serverResponse.map(list =>
-            <Nav.Link key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</Nav.Link>
+            <ListGroup.Item action as="li" key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</ListGroup.Item>
           )}
-        </Nav>
+        </ListGroup>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <InputGroup>
             <FormControl type="text" value={this.state.newListName} onChange={(e) => {this.handleChange(e)}} placeholder="Enter New List" />

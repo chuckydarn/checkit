@@ -1,19 +1,20 @@
 .app-frame {
   height: 100vh;
+  padding: 0;
 }
 
 .list-item {
   display: flex;
+  align-items: center;
 }
 
-.list-item.editing {
-  display: none;
+.update-form {
+  flex-grow: 1;
 }
 
-.list-item.editing + .form {
-  display: block;
+.input-group-append{
+  /* opacity: 0; */
 }
-
-.form {
-  display: none;
+.form-control-plaintext:focus + .input-group-append{
+  opacity: 1;
 }

@@ -19,7 +19,6 @@ class Items extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChecked = this.handleChecked.bind(this);
     this.handleUpdateSubmit = this.handleUpdateSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   callServer() {
@@ -114,21 +113,12 @@ class Items extends Component {
     })
   }
 
-  handleClick(id) {
-    var element = document.getElementById(`${id}`);
-    element.addEventListener('click', (e) => {
-      element.classList.add("editing");
-      e.stopPropagation();
-    })
-    document.addEventListener('click', (e) => {
-      if(e.target.closest('.form')) return;
-      element.classList.remove('editing');
-    })
-
-  }
-
-  handleUpdateChange(e) {
+  handleUpdateChange(e, id) {
     this.setState({updateItemName: e.target.value});
+    document.addEventListener('click', (e) => {
+      if(e.target.closest('.update-form')) return;
+      this.handleUpdateSubmit(e, id);
+    })
   }
 
   handleUpdateSubmit(e, id) {
@@ -156,40 +146,43 @@ class Items extends Component {
         });
       }
     })
-    var element = document.getElementById(`${id}`);
-    element.classList.remove('editing');
     this.setState({updateItemName: ""});
+    document.getElementById(id).blur();
   }
 
   render() {
     return (
       <div>
-      <ListGroup>
-      {this.state.serverResponse.filter(item => item.listId === this.props.listId).map(item =>
-        <ListGroup.Item key={item.id}>
-          <div className="list-item" id={item.id}>
-            <Form.Check type="checkbox" checked={item.isChecked} onChange={(e, id) => {this.handleChecked(e, item.id)}} />
-            <div onClick={(id) => this.handleClick(item.id)} >{item.body}</div>
-          </div>
-          <form onSubmit={(e, id) => this.handleUpdateSubmit(e, item.id)} className="form">
+        <div className="px-3 mb-3">
+          <ListGroup>
+            {this.state.serverResponse.filter(item => item.listId === this.props.listId).map(item =>
+              <ListGroup.Item key={item.id}>
+                <div className="list-item" >
+                  <Form.Check type="checkbox" checked={item.isChecked} onChange={(e, id) => {this.handleChecked(e, item.id)}} />
+                  <div className="update-form">
+                    <form onSubmit={(e, id) => this.handleUpdateSubmit(e, item.id)} className="form">
+                      <InputGroup>
+                        <FormControl type="text" plaintext defaultValue={item.body} onChange={(e, id) => {this.handleUpdateChange(e, item.id)}} placeholder="Edit Item" id={item.id}/>
+                      </InputGroup>
+                    </form>
+                  </div>
+                </div>
+              </ListGroup.Item>
+            )}
+          </ListGroup>
+        </div>
+
+        <div className="px-3">
+          <form onSubmit={(e) => this.handleSubmit(e)}>
             <InputGroup>
-              <FormControl type="text" value={this.state.updateItemName} onChange={(e) => {this.handleUpdateChange(e)}} placeholder="Edit Item" />
+              <FormControl type="text" value={this.state.newItemName} onChange={(e) => {this.handleChange(e)}} placeholder="Enter New Item" />
               <InputGroup.Append>
-                <Button type="submit" variant="info">Update</Button>
+                <Button type="submit" variant="info">Add</Button>
               </InputGroup.Append>
             </InputGroup>
           </form>
-        </ListGroup.Item>
-      )}
-      </ListGroup>
-      <form onSubmit={(e) => this.handleSubmit(e)}>
-        <InputGroup>
-          <FormControl type="text" value={this.state.newItemName} onChange={(e) => {this.handleChange(e)}} placeholder="Enter New Item" />
-          <InputGroup.Append>
-            <Button type="submit" variant="info">Add</Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </form>
+        </div>
+
       </div>
     );
   }

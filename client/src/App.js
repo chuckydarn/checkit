@@ -63,10 +63,15 @@ class App extends Component {
         <Container fluid className="app-frame">
           <Row className="h-100" noGutters>
             <Col className="col-3 border-right">
+              <Navbar>
+                <Navbar.Text>
+                  <h5 className="mt-2">Your Lists</h5>
+                </Navbar.Text>
+              </Navbar>
               <Lists handleListClick={this.handleListClick} initialParentState={this.initialParentState} deletedListId={this.state.deletedListId} ref="lists" />
             </Col>
-            <Col className="">
-              <Navbar className="justify-content-between border-bottom">
+            <Col className="bg-light">
+              <Navbar className="justify-content-between">
                 <Navbar.Text><h3>{this.state.activeList}</h3></Navbar.Text>
                 <Options listId={this.state.activeListId} handleListDelete={this.handleListDelete} handleItemsDelete={this.handleItemsDelete}/>
               </Navbar>
