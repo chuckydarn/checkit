@@ -126,7 +126,7 @@ class Items extends Component {
     if(!this.state.updateItemName){return};
     this.state.serverResponse.map((item, i) => {
       if(this.state.serverResponse[i].id === id) {
-        fetch(`http://localhost:9000/items/${id}/update`, {
+        fetch(`http://chuckydarn-checkit.herokuapp.com/items/${id}/update`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
