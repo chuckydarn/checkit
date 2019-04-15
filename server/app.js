@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-appConfig.init();
+appConfig.init(app, expresss);
 routeConfig.init(app);
 
 // catch 404 and forward to error handler
