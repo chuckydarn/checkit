@@ -11,7 +11,7 @@ class Options extends Component {
 
   handleListDelete(e) {
     if(!this.props.listId){return};
-    fetch(`http://localhost:9000/lists/${this.props.listId}/destroy`, {
+    fetch(`http://chuckydarn-checkit.herokuapp.com/lists/${this.props.listId}/destroy`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

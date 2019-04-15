@@ -16,7 +16,7 @@ class Lists extends Component {
   }
 
   callServer() {
-    fetch("http://localhost:9000/lists")
+    fetch("http://chuckydarn-checkit.herokuapp.com/lists")
     .then(res => res.json())
     .then(json => this.setState({ serverResponse: json.lists }))
     .then(() => {this.props.initialParentState(this.state.serverResponse[0])})
@@ -34,7 +34,7 @@ class Lists extends Component {
   handleSubmit(e) {
     e.preventDefault();
     if(!this.state.newListName){return};
-    fetch("http://localhost:9000/lists/create", {
+    fetch("http://chuckydarn-checkit.herokuapp.com/lists/create", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

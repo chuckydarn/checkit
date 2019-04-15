@@ -22,7 +22,7 @@ class Items extends Component {
   }
 
   callServer() {
-    fetch("http://localhost:9000/items")
+    fetch("http://chuckydarn-checkit.herokuapp.com/items")
     .then(res => res.json())
     .then(json => this.setState({ serverResponse: json.items }))
     .catch(err => err);
@@ -39,7 +39,7 @@ class Items extends Component {
   handleSubmit(e) {
     e.preventDefault();
     if(!this.state.newItemName){return};
-    fetch("http://localhost:9000/items/create", {
+    fetch("http://chuckydarn-checkit.herokuapp.com/items/create", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ class Items extends Component {
       if(this.state.serverResponse[i].id === id) {
         let currentCheckedState = this.state.serverResponse[i].isChecked;
         let newCheckedState = currentCheckedState ? false : true;
-        fetch(`http://localhost:9000/items/${id}/check`, {
+        fetch(`http://chuckydarn-checkit.herokuapp.com/items/${id}/check`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ class Items extends Component {
         checkedItems.push(this.state.serverResponse[i].id);
       }
     });
-    fetch(`http://localhost:9000/items/destroy`, {
+    fetch(`http://chuckydarn-checkit.herokuapp.com/items/destroy`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
