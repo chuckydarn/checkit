@@ -4,7 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {});
   List.associate = function(models) {
     // associations can be defined here
@@ -12,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "listId",
       as: "items"
     });
+
+    List.belongsTo(models.User, {
+     foreignKey: "userId",
+     onDelete: "CASCADE"
+   });
   };
   return List;
 };

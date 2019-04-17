@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Lists from './components/Lists';
 import Options from './components/Options';
 import Items from './components/Items';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import SignOut from './components/SignOut';
 import './App.css';
 
 import Container from 'react-bootstrap/Container';
@@ -13,6 +16,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
+      signInForm: true,
       activeList: "",
       activeListId: "",
       deletedListId: "",
@@ -22,6 +27,18 @@ class App extends Component {
     this.initialParentState = this.initialParentState.bind(this);
     this.handleListDelete = this.handleListDelete.bind(this);
     this.handleItemsDelete = this.handleItemsDelete.bind(this);
+    this.setUser = this.setUser.bind(this);
+    this.handleAccountClick = this.handleAccountClick.bind(this);
+  }
+
+  setUser(user){
+    this.setState({user: user});
+  }
+
+  handleAccountClick() {
+    this.setState({
+      signInForm: !this.state.signInForm
+    })
   }
 
   initialParentState(list) {
@@ -58,17 +75,32 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="app">
+    var app;
+    if(!this.state.user){
+      if(this.state.signInForm === true) {
+        app = <SignIn setUser={this.setUser} handleAccountClick={this.handleAccountClick} />
+      } else {
+        app = <SignUp setUser={this.setUser} handleAccountClick={this.handleAccountClick} />
+      }
+    } else {
+      app = <div className="app">
         <Container fluid className="app-frame">
           <Row className="h-100" noGutters>
-            <Col className="col-3 border-right">
-              <Navbar>
-                <Navbar.Text>
-                  <h5 className="mt-2">Your Lists</h5>
-                </Navbar.Text>
-              </Navbar>
-              <Lists handleListClick={this.handleListClick} initialParentState={this.initialParentState} deletedListId={this.state.deletedListId} ref="lists" />
+            <Col className="col-3 border-right sidebar">
+              <div>
+                <Navbar>
+                  <Navbar.Text>
+                    <h1 className="checkit-signedIn text-info">CheckIt</h1>
+                    <h5 className="mt-2">Your Lists</h5>
+                  </Navbar.Text>
+                </Navbar>
+                <Lists handleListClick={this.handleListClick} initialParentState={this.initialParentState} deletedListId={this.state.deletedListId} userId={this.state.user.id} ref="lists" />
+              </div>
+              <div className="border-top px-3">
+                <h5 className="mt-3 text-muted">{this.state.user.name}</h5>
+                <p className="mt-3 text-muted">{this.state.user.email}</p>
+                <SignOut setUser={this.setUser} />
+              </div>
             </Col>
             <Col className="bg-light">
               <Navbar className="justify-content-between">
@@ -80,6 +112,10 @@ class App extends Component {
           </Row>
         </Container>
       </div>
+    }
+
+    return (
+      <div className="w-100">{app}</div>
     );
   }
 }

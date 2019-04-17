@@ -13,7 +13,8 @@ module.exports = {
 
   addList(newList, callback) {
     return List.create({
-      name: newList.name
+      name: newList.name,
+      userId: newList.userId
     })
     .then((list) => {
       callback(null, list);

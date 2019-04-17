@@ -1,6 +1,26 @@
+.checkit {
+  font-family: 'Indie Flower', cursive;
+  font-size: 4rem;
+}
+
+.checkit-signedIn {
+  font-family: 'Indie Flower', cursive;
+  font-size: 3rem;
+}
+
+u:hover {
+  cursor: pointer;
+}
+
 .app-frame {
   height: 100vh;
   padding: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .list-item {
@@ -10,11 +30,4 @@
 
 .update-form {
   flex-grow: 1;
-}
-
-.input-group-append{
-  /* opacity: 0; */
-}
-.form-control-plaintext:focus + .input-group-append{
-  opacity: 1;
 }

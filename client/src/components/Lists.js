@@ -19,7 +19,10 @@ class Lists extends Component {
     fetch("http://chuckydarn-checkit.herokuapp.com/lists")
     .then(res => res.json())
     .then(json => this.setState({ serverResponse: json.lists }))
-    .then(() => {this.props.initialParentState(this.state.serverResponse[0])})
+    .then(() => {
+      var initialParentState = this.state.serverResponse.filter(list => list.userId === this.props.userId);
+      this.props.initialParentState(initialParentState[0]);
+    })
     .catch(err => err);
   }
 
@@ -41,7 +44,8 @@ class Lists extends Component {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        name: this.state.newListName
+        name: this.state.newListName,
+        userId: this.props.userId
       })
     })
     .then((res) => {
@@ -61,7 +65,7 @@ class Lists extends Component {
     return (
       <div className="px-3">
         <ListGroup as="ul" className="mb-3">
-          {this.state.serverResponse.map(list =>
+          {this.state.serverResponse.filter(list => list.userId === this.props.userId).map(list =>
             <ListGroup.Item action as="li" key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</ListGroup.Item>
           )}
         </ListGroup>
