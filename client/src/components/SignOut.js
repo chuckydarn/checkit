@@ -10,6 +10,7 @@ class SignOut extends Component {
 
   handleSignOut(e) {
     this.props.setUser(null);
+    this.props.onLogout();
   }
 
   render(){

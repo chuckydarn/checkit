@@ -3,18 +3,29 @@ const server = require("../../bin/www");
 const base = "http://localhost:9000/lists/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const List = require("../../src/db/models").List;
+const User = require("../../src/db/models").User;
 
 describe("routes : lists", () => {
 
   beforeEach((done) => {
+    this.user;
     this.list;
     sequelize.sync({force: true}).then((res) => {
-      List.create({
-        name: "Groceries"
+      User.create({
+        name: "User",
+        email: "user@email.com",
+        password: "123456"
       })
-      .then((list) => {
-        this.list = list;
-        done();
+      .then((user) => {
+        this.user = user;
+        List.create({
+          name: "Groceries",
+          userId: this.user.id
+        })
+        .then((list) => {
+          this.list = list;
+          done();
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +49,8 @@ describe("routes : lists", () => {
     const options = {
       url: `${base}create`,
       form: {
-        name: "Target"
+        name: "Target",
+        userId: 1
       }
     };
 

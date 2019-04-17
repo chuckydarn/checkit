@@ -4,25 +4,36 @@ const base = "http://localhost:9000/items/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const List = require("../../src/db/models").List;
 const Item = require("../../src/db/models").Item;
+const User = require("../../src/db/models").User;
 
 describe("routes : items", () => {
   beforeEach((done) => {
+    this.user;
     this.list;
     this.item;
     sequelize.sync({force: true}).then((res) => {
-      List.create({
-        name: "Groceries"
+      User.create({
+        name: "User",
+        email: "user@email.com",
+        password: "123456"
       })
-      .then((list) => {
-        this.list = list;
-        Item.create({
-          body: "chicken",
-          listId: this.list.id
+      .then((user) => {
+        this.user = user;
+        List.create({
+          name: "Groceries",
+          userId: this.user.id
         })
-        .then((item) => {
-          this.item = item;
-          done();
-        });
+        .then((list) => {
+          this.list = list;
+          Item.create({
+            body: "chicken",
+            listId: this.list.id
+          })
+          .then((item) => {
+            this.item = item;
+            done();
+          });
+        })
       })
       .catch((err) => {
         console.log(err);

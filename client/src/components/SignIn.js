@@ -43,6 +43,7 @@ class SignIn extends Component {
     })
     .then((body) => {
       this.props.setUser(body.user);
+      this.props.onLogin(body.user.id);
     });
     this.setState({newUserEmail: ""});
     this.setState({newUserPw: ""});

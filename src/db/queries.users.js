@@ -2,6 +2,16 @@ const User = require("./models").User;
 const bcrypt = require("bcryptjs");
 
 module.exports = {
+  getUser(id, callback) {
+    return User.findById(id)
+    .then((user) => {
+      callback(null, user);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+
   createUser(newUser, callback){
     const salt = bcrypt.genSaltSync();
     const hashedPassword = bcrypt.hashSync(newUser.password, salt);

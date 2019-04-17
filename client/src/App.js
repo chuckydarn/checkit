@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cookie from 'react-cookie';
 import Lists from './components/Lists';
 import Options from './components/Options';
 import Items from './components/Items';
@@ -17,6 +18,7 @@ class App extends Component {
     super(props);
     this.state = {
       user: null,
+      cookieId: null,
       signInForm: true,
       activeList: "",
       activeListId: "",
@@ -28,7 +30,34 @@ class App extends Component {
     this.handleListDelete = this.handleListDelete.bind(this);
     this.handleItemsDelete = this.handleItemsDelete.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.getUser = this.getUser.bind(this);
+    this.onLogin = this.onLogin.bind(this);
+    this.onLogout = this.onLogout.bind(this);
     this.handleAccountClick = this.handleAccountClick.bind(this);
+  }
+
+  componentWillMount() {
+    var cookieId = cookie.load('cookieId');
+    this.getUser(cookieId);
+  }
+
+  onLogin(userId) {
+    this.setState({cookieId: userId});
+    cookie.save('cookieId', this.state.cookieId, {path: '/'});
+  }
+
+  onLogout() {
+    cookie.remove('cookieId', {path: '/'});
+  }
+
+  getUser(id) {
+    fetch(`http://chuckydarn-checkit.herokuapp.com/users/${id}`)
+    .then(res => res.json())
+    .then(body => this.setState({
+      cookieId: id,
+      user: body.user
+    }))
+    .catch(err => err);
   }
 
   setUser(user){
@@ -76,11 +105,11 @@ class App extends Component {
 
   render() {
     var app;
-    if(!this.state.user){
+    if(!this.state.cookieId || !this.state.user){
       if(this.state.signInForm === true) {
-        app = <SignIn setUser={this.setUser} handleAccountClick={this.handleAccountClick} />
+        app = <SignIn setUser={this.setUser} handleAccountClick={this.handleAccountClick} onLogin={this.onLogin} />
       } else {
-        app = <SignUp setUser={this.setUser} handleAccountClick={this.handleAccountClick} />
+        app = <SignUp setUser={this.setUser} handleAccountClick={this.handleAccountClick} onLogin={this.onLogin} />
       }
     } else {
       app = <div className="app">
@@ -99,7 +128,7 @@ class App extends Component {
               <div className="border-top px-3">
                 <h5 className="mt-3 text-muted">{this.state.user.name}</h5>
                 <p className="mt-3 text-muted">{this.state.user.email}</p>
-                <SignOut setUser={this.setUser} />
+                <SignOut setUser={this.setUser} onLogout={this.onLogout} />
               </div>
             </Col>
             <Col className="bg-light">

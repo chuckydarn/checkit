@@ -64,7 +64,7 @@ class Items extends Component {
       if(this.state.serverResponse[i].id === id) {
         let currentCheckedState = this.state.serverResponse[i].isChecked;
         let newCheckedState = currentCheckedState ? false : true;
-        fetch(`http://chuckydarn-checkit.herokuapp.com/items/${id}/check`, {
+        fetch(`http://chuckydarn-checkit.herokuapp.com/${id}/check`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
