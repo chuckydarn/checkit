@@ -63,7 +63,7 @@ class SignUp extends Component {
       <div>
         <Container fluid className="app-frame bg-light">
           <Row className="h-100 align-items-center justify-content-center" noGutters>
-            <Col className="col-4 text-center">
+            <Col className="col-10 col-sm-4 text-center">
               <Card>
                 <Card.Body>
                   <h1 className="checkit text-info mb-0">CheckIt</h1>
