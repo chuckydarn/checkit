@@ -63,7 +63,7 @@ class Lists extends Component {
 
   render() {
     return (
-      <div className="px-3">
+      <div>
         <ListGroup as="ul" className="mb-3">
           {this.state.serverResponse.filter(list => list.userId === this.props.userId).map(list =>
             <ListGroup.Item action as="li" key={list.id} onClick={(e) => {this.props.handleListClick(list)}}>{list.name}</ListGroup.Item>

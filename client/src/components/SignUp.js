@@ -4,6 +4,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 class SignUp extends Component {
   constructor(props) {
@@ -63,19 +64,23 @@ class SignUp extends Component {
         <Container fluid className="app-frame bg-light">
           <Row className="h-100 align-items-center justify-content-center" noGutters>
             <Col className="col-4 text-center">
-              <h1 className="checkit text-info">CheckIt</h1>
-              <p className="mb-3 text-muted">Ch-Ch-Ch-Ch-CheckIt Out</p>
+              <Card>
+                <Card.Body>
+                  <h1 className="checkit text-info mb-0">CheckIt</h1>
+                  <p className="mb-3 text-muted">Ch-Ch-Ch-Ch-CheckIt Out</p>
 
-              <h3 className="mb-3">Sign Up</h3>
+                  <h3 className="mb-3">Sign Up</h3>
 
-              <form onSubmit={(e) => this.handleSignUp(e)} className="form-signin">
-                <FormControl type="test" value={this.state.newUserName} onChange={(e) => {this.handleNameChange(e)}} placeholder="Enter name" className="mb-1" />
-                <FormControl type="email" value={this.state.newUserEmail} onChange={(e) => {this.handleEmailChange(e)}} placeholder="Enter email" className="mb-1" />
-                <FormControl type="password" value={this.state.newUserPw} onChange={(e) => {this.handlePwChange(e)}} placeholder="Enter password" />
+                  <form onSubmit={(e) => this.handleSignUp(e)} className="form-signin">
+                    <FormControl type="test" value={this.state.newUserName} onChange={(e) => {this.handleNameChange(e)}} placeholder="Enter name" className="mb-1" />
+                    <FormControl type="email" value={this.state.newUserEmail} onChange={(e) => {this.handleEmailChange(e)}} placeholder="Enter email" className="mb-1" />
+                    <FormControl type="password" value={this.state.newUserPw} onChange={(e) => {this.handlePwChange(e)}} placeholder="Enter password" />
 
-                <Button variant="info" type="submit" className="mt-3 mb-3">Sign up</Button>
-              </form>
-              <u onClick={() => {this.props.handleAccountClick()}}>I already have an account</u>
+                    <Button variant="info" type="submit" className="mt-3 mb-3">Sign up</Button>
+                  </form>
+                  <a href="javascript:;" onClick={() => {this.props.handleAccountClick()}}>I already have an account</a>
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
         </Container>
